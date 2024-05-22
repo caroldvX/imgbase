@@ -19,6 +19,11 @@
       <img id="imagem" src="" alt="Imagem Convertida">
       <div id="resultado"></div>
       <script>
+         // Função para obter o parâmetro 'url' da URL
+         function getUrlParameter(url) {
+         const urlParams = new URLSearchParams(url);
+         return urlParams.get('url');
+         }
          // Função para obter parâmetro da URL
          function getParameterByName(name, url = window.location.href) {
              name = name.replace(/[\[\]]/g, '\\$&');
@@ -39,13 +44,15 @@
          }
          
          // Função para gerar a URL da imagem com a string de resultado da conversão
+         // Função para converter a URL da imagem
          function converterURL() {
-             const url = document.getElementById('urlInput').value;
-             if (url) {
-                 const resultadoBase64 = urlToBase64url(url);
-                 const urlDaImagem = "https://res.cloudinary.com/dx6npbxrx/image/upload/co_rgb:000000,l_text:roboto_98_normal_left:37999257656/fl_layer_apply,g_center,y_200/l_fetch:" + resultadoBase64 + ",w_625,h_625,c_fill,r_max/fl_layer_apply,x_0,y_-200/v1715701769/ro5jzv.jpg";
-                 // Exibir a imagem
-                 document.getElementById('imagem').src = urlDaImagem;
+         // Obter a URL da imagem da entrada ou da URL da página
+         const url = document.getElementById('urlInput').value || getUrlParameter(window.location.href);
+         if (url) {
+         const resultadoBase64 = urlToBase64url(url);
+         const urlDaImagem = "https://res.cloudinary.com/dx6npbxrx/image/upload/co_rgb:000000,l_text:roboto_98_normal_left:37999257656/fl_layer_apply,g_center,y_200/l_fetch:" + resultadoBase64 + ",w_625,h_625,c_fill,r_max/fl_layer_apply,x_0,y_-200/v1715701769/ro5jzv.jpg";
+         // Exibir a imagem
+         document.getElementById('imagem').src = urlDaImagem;
          
          
          // Retornar apenas a URL da imagem no formato JSON

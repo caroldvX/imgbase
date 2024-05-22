@@ -59,12 +59,12 @@
             }
         }
 
-        // Verificar se há parâmetro 'foto' na URL e preencher o campo de entrada
+        // Obter o parâmetro 'url' da URL da página
         window.onload = function() {
-            const parametroURL = getParameterByName('{{foto}}');
+            const parametroURL = getParameterByName('url');
             if (parametroURL) {
                 document.getElementById('urlInput').value = parametroURL;
-                converterURL(); // Converter automaticamente se houver um parâmetro 'foto' na URL
+                converterURL(); // Converter automaticamente se houver um parâmetro 'url' na URL
             }
         };
     </script>

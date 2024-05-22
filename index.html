@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converter URL para Base64URL</title>
+</head>
+<body>
+    <h1>Converter URL para Base64URL</h1>
+    <p>Insira a URL da imagem:</p>
+    <input type="text" id="urlInput" placeholder="Insira a URL da imagem">
+    <button onclick="converterURL()">Converter</button>
+    <p>Resultado:</p>
+    <div id="resultado"></div>
+
+    <script>
+        // Função para obter parâmetro da URL
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            const results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Função para converter URL para Base64URL
+        function urlToBase64url(url) {
+            const base64url = btoa(url)
+                .replace(/\+/g, '-')
+                .replace(/\//g, '_')
+                .replace(/=/g, '');
+            return base64url;
+        }
+
+        // Função para gerar a URL da imagem com a string de resultado da conversão
+        function gerarURLDaImagem(resultado) {
+            const cloudinaryURL = "https://res.cloudinary.com/dx6npbxrx/image/upload/co_rgb:000000,l_text:roboto_98_normal_left:37999257656/fl_layer_apply,g_center,y_200/l_fetch:" + resultado + ",w_625,h_625,c_fill,r_max/fl_layer_apply,x_0,y_-200/v1715701769/ro5jzv.jpg";
+            return cloudinaryURL;
+        }
+
+        // Função para converter a URL e exibir o resultado
+        function converterURL() {
+            const url = document.getElementById('urlInput').value;
+            if (url) {
+                const resultadoBase64 = urlToBase64url(url);
+                const urlDaImagem = gerarURLDaImagem(resultadoBase64);
+                // Exibir a imagem na mesma página
+                document.getElementById('resultado').innerHTML = `<img src="${urlDaImagem}" alt="Imagem Convertida">`;
+            } else {
+                document.getElementById('resultado').innerText = 'Por favor, insira uma URL.';
+            }
+        }
+
+        // Verificar se há parâmetro 'url' na URL e preencher o campo de entrada
+        window.onload = function() {
+            const parametroURL = getParameterByName('url');
+            if (parametroURL) {
+                document.getElementById('urlInput').value = parametroURL;
+                converterURL(); // Converter automaticamente se houver um parâmetro 'url' na URL
+            }
+        };
+    </script>
+</body>
+</html>

@@ -29,17 +29,38 @@
             return base64url;
         }
 
-        // Função para gerar a URL da imagem com a string de resultado da conversão
+        // Função para realizar a solicitação HTTP e obter o resultado da imagem convertida
+        function obterImagemConvertida(urlDaImagem) {
+            return new Promise((resolve, reject) => {
+                fetch(`https://caroldvx.github.io/imgbase/?url=${encodeURIComponent(urlDaImagem)}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        resolve(data); // Retorna o resultado da conversão
+                    })
+                    .catch(error => {
+                        reject(error); // Retorna o erro, se houver
+                    });
+            });
+        }
+
+        // Função para converter a imagem e exibir o resultado
         function converterURL() {
             const url = document.getElementById('urlInput').value;
             if (url) {
                 const resultadoBase64 = urlToBase64url(url);
                 const urlDaImagem = "https://res.cloudinary.com/dx6npbxrx/image/upload/co_rgb:000000,l_text:roboto_98_normal_left:37999257656/fl_layer_apply,g_center,y_200/l_fetch:" + resultadoBase64 + ",w_625,h_625,c_fill,r_max/fl_layer_apply,x_0,y_-200/v1715701769/ro5jzv.jpg";
-                // Exibir a imagem
-                document.getElementById('imagem').src = urlDaImagem;
+                
+                obterImagemConvertida(urlDaImagem)
+                    .then(resultado => {
+                        // Exibir a imagem
+                        document.getElementById('imagem').src = resultado;
 
-                // Exibir o resultado
-                document.getElementById('resultado').innerText = urlDaImagem;
+                        // Exibir o resultado
+                        document.getElementById('resultado').innerText = resultado;
+                    })
+                    .catch(error => {
+                        console.error('Erro ao obter a imagem convertida:', error);
+                    });
             }
         }
     </script>

@@ -13,22 +13,12 @@
 </head>
 <body>
     <h1>Insira a URL da imagem</h1>
-    <input type="text" id="urlInput" placeholder="{{foto}}">
+    <input type="text" id="urlInput" placeholder="Insira a URL da imagem">
     <button onclick="converterURL()">Converter</button>
     <br>
     <img id="imagem" src="" alt="Imagem Convertida">
 
     <script>
-        // Função para obter parâmetro da URL
-        function getParameterByName(name, url = window.location.href) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-            const results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-
         // Função para converter URL para Base64URL
         function urlToBase64url(url) {
             const base64url = btoa(url)
@@ -43,27 +33,18 @@
             const url = document.getElementById('urlInput').value;
             if (url) {
                 const resultadoBase64 = urlToBase64url(url);
-                const urlDaImagem = "https://res.cloudinary.com/dx6npbxrx/image/upload/co_rgb:000000,l_text:roboto_98_normal_left:37999257656/fl_layer_apply,g_center,y_200/l_fetch:" + resultadoBase64 + ",w_625,h_625,c_fill,r_max/fl_layer_apply,x_0,y_-200/v1715701769/ro5jzv.jpg";
+                const urlDaImagemConvertida = "https://caroldvx.github.io/imgbase/converter?url=" + resultadoBase64;
                 // Exibir a imagem
-                document.getElementById('imagem').src = urlDaImagem;
-
-                // Retornar o resultado no formato JSON
-                const resultadoJSON = JSON.stringify({
-                    statusCode: 200,
-                    data: {
-                        urlDaImagem: urlDaImagem
-                    }
-                });
-                alert(resultadoJSON); // Isso é apenas para demonstração, você pode remover isso e adaptar conforme necessário
+                document.getElementById('imagem').src = urlDaImagemConvertida;
             }
         }
 
-        // Verificar se há parâmetro 'foto' na URL e preencher o campo de entrada
+        // Verificar se há parâmetro 'url' na URL e preencher o campo de entrada
         window.onload = function() {
-            const parametroURL = getParameterByName('{{foto}}');
+            const parametroURL = new URLSearchParams(window.location.search).get('url');
             if (parametroURL) {
                 document.getElementById('urlInput').value = parametroURL;
-                converterURL(); // Converter automaticamente se houver um parâmetro 'foto' na URL
+                converterURL(); // Converter automaticamente se houver um parâmetro 'url' na URL
             }
         };
     </script>

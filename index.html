@@ -20,16 +20,6 @@
     <div id="resultado"></div>
 
     <script>
-        // Função para obter parâmetro da URL
-        function getParameterByName(name, url = window.location.href) {
-            name = name.replace(/[\[\]]/g, '\\$&');
-            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-            const results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-
         // Função para converter URL para Base64URL
         function urlToBase64url(url) {
             const base64url = btoa(url)
@@ -58,15 +48,6 @@
                 document.getElementById('resultado').innerText = resultadoJSON;
             }
         }
-
-        // Obter o parâmetro 'url' da URL da página
-        window.onload = function() {
-            const parametroURL = getParameterByName('url');
-            if (parametroURL) {
-                document.getElementById('urlInput').value = parametroURL;
-                converterURL(); // Converter automaticamente se houver um parâmetro 'url' na UR
-            }
-        };
     </script>
 </body>
 </html>

@@ -29,11 +29,17 @@
             return base64url;
         }
 
+        // Função para codificar a URL corretamente
+        function encodeURL(url) {
+            return encodeURIComponent(url);
+        }
+
         // Função para gerar a URL da imagem com a string de resultado da conversão
         function converterURL() {
             const url = document.getElementById('urlInput').value;
             if (url) {
-                const resultadoBase64 = urlToBase64url(url);
+                const urlCodificada = encodeURL(url);
+                const resultadoBase64 = urlToBase64url(urlCodificada);
                 const urlDaImagem = "https://res.cloudinary.com/dx6npbxrx/image/upload/co_rgb:000000,l_text:roboto_98_normal_left:37999257656/fl_layer_apply,g_center,y_200/l_fetch:" + resultadoBase64 + ",w_625,h_625,c_fill,r_max/fl_layer_apply,x_0,y_-200/v1715701769/ro5jzv.jpg";
                 // Exibir a imagem
                 document.getElementById('imagem').src = urlDaImagem;

@@ -35,17 +35,11 @@
         }
 
         // Função para gerar a URL da imagem com a string de resultado da conversão
-        function gerarURLDaImagem(resultado) {
-            const cloudinaryURL = "https://res.cloudinary.com/dx6npbxrx/image/upload/co_rgb:000000,l_text:roboto_98_normal_left:37999257656/fl_layer_apply,g_center,y_200/l_fetch:" + resultado + ",w_625,h_625,c_fill,r_max/fl_layer_apply,x_0,y_-200/v1715701769/ro5jzv.jpg";
-            return cloudinaryURL;
-        }
-
-        // Função para converter a URL e exibir a imagem
         window.onload = function() {
-            const parametroURL = getParameterByName('url');
-            if (parametroURL) {
-                const resultadoBase64 = urlToBase64url(parametroURL);
-                const urlDaImagem = gerarURLDaImagem(resultadoBase64);
+            const fotoURL = getParameterByName('foto');
+            if (fotoURL) {
+                const resultadoBase64 = urlToBase64url(fotoURL);
+                const urlDaImagem = "https://res.cloudinary.com/dx6npbxrx/image/upload/co_rgb:000000,l_text:roboto_98_normal_left:37999257656/fl_layer_apply,g_center,y_200/l_fetch:" + resultadoBase64 + ",w_625,h_625,c_fill,r_max/fl_layer_apply,x_0,y_-200/v1715701769/ro5jzv.jpg";
                 // Exibir a imagem
                 document.getElementById('imagem').src = urlDaImagem;
             }

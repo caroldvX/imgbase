@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Converter URL para Base64URL</title>
+    <title>Imagem Convertida</title>
+    <style>
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>Converter URL para Base64URL</h1>
-    <p>Insira a URL da imagem:</p>
-    <input type="text" id="urlInput" placeholder="Insira a URL da imagem">
-    <button onclick="converterURL()">Converter</button>
-    <p>Resultado:</p>
-    <div id="resultado"></div>
+    <img id="imagem" src="" alt="Imagem Convertida">
 
     <script>
         // Função para obter parâmetro da URL
@@ -39,25 +40,14 @@
             return cloudinaryURL;
         }
 
-        // Função para converter a URL e exibir o resultado
-        function converterURL() {
-            const url = document.getElementById('urlInput').value;
-            if (url) {
-                const resultadoBase64 = urlToBase64url(url);
-                const urlDaImagem = gerarURLDaImagem(resultadoBase64);
-                // Exibir a imagem na mesma página
-                document.getElementById('resultado').innerHTML = `<img src="${urlDaImagem}" alt="Imagem Convertida">`;
-            } else {
-                document.getElementById('resultado').innerText = 'Por favor, insira uma URL.';
-            }
-        }
-
-        // Verificar se há parâmetro 'url' na URL e preencher o campo de entrada
+        // Função para converter a URL e exibir a imagem
         window.onload = function() {
             const parametroURL = getParameterByName('url');
             if (parametroURL) {
-                document.getElementById('urlInput').value = parametroURL;
-                converterURL(); // Converter automaticamente se houver um parâmetro 'url' na URL
+                const resultadoBase64 = urlToBase64url(parametroURL);
+                const urlDaImagem = gerarURLDaImagem(resultadoBase64);
+                // Exibir a imagem
+                document.getElementById('imagem').src = urlDaImagem;
             }
         };
     </script>
